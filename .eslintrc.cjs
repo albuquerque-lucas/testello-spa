@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -14,5 +15,18 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'indent': ['error', 2, { 'SwitchCase': 1 }],
+    'max-len': ['error', { 'code': 100 }],
   },
-}
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/indent': ['error', 2],
+      },
+    },
+  ],
+  settings: {
+    'eslint.autoFixOnSave': true,
+  },
+};
