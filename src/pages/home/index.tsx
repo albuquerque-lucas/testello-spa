@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <div className="d-flex flex-column align-items-center min-vh-100 mt-5">
+    <div className="d-flex flex-column align-items-center min-vh-100 pt-5 bg-secondary-subtle">
       <h1 className="display-4 mb-4">Bem-vindo à Testello</h1>
       <p className="h5 mb-4 text-center">Esta é a página inicial. Escolha, dentre as opções, o aspecto que deseja administrar:</p>
       <ul className="d-flex flex-column flex-md-row justify-content-center list-unstyled">

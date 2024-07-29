@@ -22,16 +22,6 @@ const NavMenu = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <NavLink to="/" className="nav-link text-white">
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/home" className="nav-link text-white">
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
               <NavLink to="/fretes" className="nav-link text-white">
                 Fretes
               </NavLink>
