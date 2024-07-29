@@ -12,7 +12,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <footer className="bg-gray-800 text-white p-4 text-center">
-        © 2024 Testello. All rights reserved.
+        Testello - 2024
       </footer>
     </div>
   );
