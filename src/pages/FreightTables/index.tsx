@@ -85,33 +85,35 @@ const FreightTables: React.FC = () => {
           {showForm ? 'Cancelar' : 'Adicionar Tabela de Frete'}
         </button>
       </div>
-      {showForm && (
-        <FreightTableCreateForm
-          branchId={branchId}
-          customerId={customerId}
-          fromPostcode={fromPostcode}
-          toPostcode={toPostcode}
-          fromWeight={fromWeight}
-          toWeight={toWeight}
-          cost={cost}
-          setBranchId={setBranchId}
-          setCustomerId={setCustomerId}
-          setFromPostcode={setFromPostcode}
-          setToPostcode={setToPostcode}
-          setFromWeight={setFromWeight}
-          setToWeight={setToWeight}
-          setCost={setCost}
-          handleAddFreightTable={handleAddFreightTable}
-        />
-      )}
+      {
+        showForm && (
+          <FreightTableCreateForm
+            branchId={branchId}
+            customerId={customerId}
+            fromPostcode={fromPostcode}
+            toPostcode={toPostcode}
+            fromWeight={fromWeight}
+            toWeight={toWeight}
+            cost={cost}
+            setBranchId={setBranchId}
+            setCustomerId={setCustomerId}
+            setFromPostcode={setFromPostcode}
+            setToPostcode={setToPostcode}
+            setFromWeight={setFromWeight}
+            setToWeight={setToWeight}
+            setCost={setCost}
+            handleAddFreightTable={handleAddFreightTable}
+          />
+        )
+      }
       <table className="table table-hover">
         <thead>
           <tr>
             <th>ID</th>
             <th>ID da Filial</th>
             <th>ID do Cliente</th>
-            <th>CEP de Origem</th>
-            <th>CEP de Destino</th>
+            <th>Código de Origem</th>
+            <th>Código de Destino</th>
             <th>Peso de Origem</th>
             <th>Peso de Destino</th>
             <th>Custo</th>
