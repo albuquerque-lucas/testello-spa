@@ -4,9 +4,10 @@ import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
 import CustomerForm from '../../components/Forms/CustomerForm';
 import Input from '../../components/Inputs/Input';
 import { Customer } from '../../lib/types/customers';
+import { getCustomers, addCustomer, deleteCustomer } from '../../lib/api/customerAPI';
 
 const Customers: React.FC = () => {
-  const { customers } = useCustomerData();
+  const { customers, setCustomers } = useCustomerData();
   const [showForm, setShowForm] = useState(false);
   const [showFilterForm, setShowFilterForm] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState('');
@@ -16,12 +17,32 @@ const Customers: React.FC = () => {
     alert(`Editar cliente com id: ${id}`);
   };
 
-  const handleDelete = (id: number) => {
-    alert(`Deletar cliente com id: ${id}`);
+  const handleDelete = async (id: number) => {
+    if (window.confirm('Tem certeza de que deseja excluir este cliente?')) {
+      const deleteResult = await deleteCustomer(id);
+      const getCustomersResult = await getCustomers();
+      if (deleteResult && getCustomersResult) {
+        setCustomers(getCustomersResult);
+        alert(`Cliente com id: ${id} deletado com sucesso!`);
+      }
+    }
   };
 
-  const handleAddCustomer = () => {
-    alert(`Adicionar cliente com nome: ${newCustomerName}`);
+  const handleAddCustomer = async () => {
+    if (!newCustomerName) {
+      alert('O campo nome é obrigatório.');
+      return;
+    }
+    const newCustomer = {
+      name: newCustomerName,
+    };
+    const postResult = await addCustomer(newCustomer);
+    const getCustomersResult = await getCustomers();
+    if (postResult && getCustomersResult) {
+      setCustomers(getCustomersResult);
+      setNewCustomerName('');
+    }
+
   };
 
   const handleFilterCustomer = () => {
