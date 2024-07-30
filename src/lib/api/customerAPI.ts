@@ -8,5 +8,6 @@ export const getCustomers = async () => {
     return response.data;
   } catch (error: any) {
     console.log('Ocorreu um erro tentando cuscar os clientes', error);
+    return null;
   }
 }
