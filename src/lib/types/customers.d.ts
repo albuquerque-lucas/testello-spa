@@ -5,9 +5,13 @@ export type Customer = {
   name: string;
 };
 
-export type CustomerContext = {
-  customers: APIPaginatedResponse<Customer>;
+export type TCustomerContext = {
+  customers: APIPaginatedResponse<Customer> | null;
   setCustomers: (customers: APIPaginatedResponse<Customer> | null) => void;
-  navigationLinks: NavigationLink[];
+  navigationLinks: NavigationLink[] | null;
   setNavigationLinks: (navigationLinks: NavigationLink[] | null) => void;
+}
+
+export type CustomerProviderProps = {
+  children: React.ReactNode;
 }
