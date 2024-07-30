@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash } from "react-icons/fa";
-import CustomerCreateForm from '../../components/Forms/CustomerCreateForm';
 import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
+import CustomerForm from '../../components/Forms/CustomerForm';
+import Input from '../../components/Inputs/Input';
 import { Customer } from '../../lib/types/customers';
-import { APIPaginatedResponse } from '../../lib/types/responses';
 
 const Customers: React.FC = () => {
   const { customers } = useCustomerData();
   const [showForm, setShowForm] = useState(false);
+  const [showFilterForm, setShowFilterForm] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState('');
+  const [filterCustomerName, setFilterCustomerName] = useState('');
 
   const handleEdit = (id: number) => {
     alert(`Editar cliente com id: ${id}`);
@@ -22,21 +24,65 @@ const Customers: React.FC = () => {
     alert(`Adicionar cliente com nome: ${newCustomerName}`);
   };
 
+  const handleFilterCustomer = () => {
+    alert(`Filtrar cliente com nome: ${filterCustomerName}`);
+  };
+
+  const toggleAddCustomerForm = () => {
+    setShowForm(!showForm);
+    if (showFilterForm) {
+      setShowFilterForm(false);
+    }
+  };
+
+  const toggleFilterCustomerForm = () => {
+    setShowFilterForm(!showFilterForm);
+    if (showForm) {
+      setShowForm(false);
+    }
+  };
+
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h3>Dashboard de Clientes</h3>
-        <button className="btn btn-dark" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancelar' : 'Adicionar Cliente'}
-        </button>
+        <div>
+          <button className="btn btn-dark me-2" onClick={toggleAddCustomerForm}>
+            {showForm ? 'Cancelar' : 'Adicionar Cliente'}
+          </button>
+          <button className="btn btn-dark" onClick={toggleFilterCustomerForm}>
+            {showFilterForm ? 'Cancelar' : 'Filtrar Cliente'}
+          </button>
+        </div>
       </div>
       {
         showForm && (
-          <CustomerCreateForm
-            name={newCustomerName}
-            setName={setNewCustomerName}
-            handleAddCustomer={handleAddCustomer}
-          />
+          <CustomerForm
+            buttonText='Adicionar'
+            handleAddCustomer={ handleAddCustomer }
+          >
+            <Input
+              type="text"
+              placeholder="Nome do cliente"
+              value={newCustomerName}
+              onChange={(e) => setNewCustomerName(e.target.value)}
+            />
+          </CustomerForm>
+        )
+      }
+      {
+        showFilterForm && (
+          <CustomerForm
+            buttonText='Filtrar'
+            handleAddCustomer={handleFilterCustomer}
+          >
+            <Input
+              type="text"
+              placeholder="Filtro..."
+              value={filterCustomerName}
+              onChange={(e) => setFilterCustomerName(e.target.value)}
+            />
+          </CustomerForm>
         )
       }
       <table className="table table-hover">
