@@ -15,6 +15,7 @@ const Branches: React.FC = () => {
   const [newBranchName, setNewBranchName] = useState('');
   const [newBranchLocation, setNewBranchLocation] = useState('');
   const [filterBranchName, setFilterBranchName] = useState('');
+  const [filterBranchLocation, setFilterBranchLocation] = useState('');
   const [filterOrder, setFilterOrder] = useState('desc');
   const [editBranchId, setEditBranchId] = useState<number | null>(null);
   const [editBranchName, setEditBranchName] = useState('');
@@ -76,6 +77,7 @@ const Branches: React.FC = () => {
   const handleFilterBranch = async () => {
     const params = {
       name: filterBranchName,
+      location: filterBranchLocation,
       order: filterOrder,
     };
     const getBranchesResult = await getBranches('/api/branches', params);
@@ -164,9 +166,15 @@ const Branches: React.FC = () => {
           <CustomerForm buttonText="Filtrar" handleAddCustomer={handleFilterBranch}>
             <Input
               type="text"
-              placeholder="Filtro..."
+              placeholder="Filtrar por nome"
               value={filterBranchName}
               onChange={(e) => setFilterBranchName(e.target.value)}
+            />
+            <Input
+              type="text"
+              placeholder="Filtrar por localidade"
+              value={filterBranchLocation}
+              onChange={(e) => setFilterBranchLocation(e.target.value)}
             />
             <SelectInput
               value={filterOrder}
