@@ -4,7 +4,7 @@ import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
 import CustomerForm from '../../components/Forms/CustomerForm';
 import Input from '../../components/Inputs/Input';
 import { Customer } from '../../lib/types/customers';
-import { getCustomers, addCustomer, deleteCustomer } from '../../lib/api/customerAPI';
+import { getCustomers, addCustomer, updateCustomer, deleteCustomer } from '../../lib/api/customerAPI';
 
 const Customers: React.FC = () => {
   const { customers, setCustomers } = useCustomerData();
@@ -16,8 +16,15 @@ const Customers: React.FC = () => {
   const [editCustomerName, setEditCustomerName] = useState('');
 
   const handleEdit = async (id: number) => {
-    // Implementar a lógica de edição
-    alert(`Editar cliente com id: ${id}`);
+    const editedCustomer = {
+      name: editCustomerName,
+    };
+    const editResult = await updateCustomer(id, editedCustomer);
+    const getCustomersResult = await getCustomers();
+    if (editResult && getCustomersResult) {
+      setCustomers(getCustomersResult);
+      alert(`Cliente com id: ${id} editado com sucesso!`);
+    }
   };
 
   const handleDelete = async (id: number) => {
