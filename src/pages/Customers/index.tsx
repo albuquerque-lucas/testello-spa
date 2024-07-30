@@ -1,27 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import CustomerCreateForm from '../../components/Forms/CustomerCreateForm';
-import { getCustomers } from '../../lib/api/customerAPI';
-import { CustomerContext } from '../../lib/context/CustomerContext';
+import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
 import { Customer } from '../../lib/types/customers';
+import { APIPaginatedResponse } from '../../lib/types/responses';
 
 const Customers: React.FC = () => {
-  const {
-    customers,
-    setCustomers,
-  } = useContext(CustomerContext);
+  const { customers } = useCustomerData();
   const [showForm, setShowForm] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState('');
-
-  useEffect(() => {
-    const fetchCustomers = async () => {
-      const data = await getCustomers();
-      if (data) {
-        setCustomers(data);
-      }
-    };
-    fetchCustomers();
-  }, [setCustomers]);
 
   const handleEdit = (id: number) => {
     alert(`Editar cliente com id: ${id}`);
@@ -32,6 +19,7 @@ const Customers: React.FC = () => {
   };
 
   const handleAddCustomer = () => {
+    alert(`Adicionar cliente com nome: ${newCustomerName}`);
   };
 
   return (
