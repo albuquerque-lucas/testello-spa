@@ -55,10 +55,16 @@ const Customers: React.FC = () => {
     }
   };
   
-  const handleFilterCustomer = () => {
-    alert(`Filtrar cliente com nome: ${filterCustomerName}`);
+  const handleFilterCustomer = async () => {
+    const params = {
+      name: filterCustomerName,
+    };
+    const getCustomersResult = await getCustomers('/api/customers', params);
+    if (getCustomersResult) {
+      setCustomers(getCustomersResult);
+    }
   };
-
+  
   const toggleAddCustomerForm = () => {
     setShowForm(!showForm);
     if (showFilterForm) {
@@ -113,26 +119,30 @@ const Customers: React.FC = () => {
           </button>
         </div>
       </div>
-      {showForm && (
-        <CustomerForm buttonText="Adicionar" handleAddCustomer={handleAddCustomer}>
-          <Input
-            type="text"
-            placeholder="Nome do cliente"
-            value={newCustomerName}
-            onChange={(e) => setNewCustomerName(e.target.value)}
-          />
-        </CustomerForm>
-      )}
-      {showFilterForm && (
-        <CustomerForm buttonText="Filtrar" handleAddCustomer={handleFilterCustomer}>
-          <Input
-            type="text"
-            placeholder="Filtro..."
-            value={filterCustomerName}
-            onChange={(e) => setFilterCustomerName(e.target.value)}
-          />
-        </CustomerForm>
-      )}
+      {
+        showForm && (
+          <CustomerForm buttonText="Adicionar" handleAddCustomer={handleAddCustomer}>
+            <Input
+              type="text"
+              placeholder="Nome do cliente"
+              value={newCustomerName}
+              onChange={(e) => setNewCustomerName(e.target.value)}
+            />
+          </CustomerForm>
+        )
+      }
+      {
+        showFilterForm && (
+          <CustomerForm buttonText="Filtrar" handleAddCustomer={handleFilterCustomer}>
+            <Input
+              type="text"
+              placeholder="Filtro..."
+              value={filterCustomerName}
+              onChange={(e) => setFilterCustomerName(e.target.value)}
+            />
+          </CustomerForm>
+        )
+      }
       <div className='d-flex justify-content-center'>
         <NavLinks links={customers?.links || []} onNavigate={handleNavigate} />
       </div>
