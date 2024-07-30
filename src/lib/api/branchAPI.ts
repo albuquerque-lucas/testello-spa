@@ -5,6 +5,7 @@ import { APIPaginatedResponse } from '../types/responses';
 export const getBranches = async (url: string = '/api/branches', params: any = {}): Promise<APIPaginatedResponse<Branch> | null> => {
   try {
     const response = await axios.get<APIPaginatedResponse<Branch>>(url, { params });
+    console.log('response', response.data);
     return response.data;
   } catch (error: any) {
     console.log('Ocorreu um erro tentando buscar as filiais', error);

@@ -15,7 +15,7 @@ const defaultValue: TBranchContext = {
 
 export const BranchContext = createContext(defaultValue);
 
-export const CustomerProvider = ({ children }: BranchProviderProps) => {
+export const BranchProvider = ({ children }: BranchProviderProps) => {
   const [branches, setBranches] = useState<APIPaginatedResponse<Branch> | null>(null);
   const [navigationLinks, setNavigationLinks] = useState<NavigationLink[] | null>(null);
 
