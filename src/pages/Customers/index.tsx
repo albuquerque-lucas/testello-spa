@@ -3,6 +3,7 @@ import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
 import CustomerForm from '../../components/Forms/CustomerForm';
 import Input from '../../components/Inputs/Input';
+import SelectInput from '../../components/Inputs/SelectInput';
 import { Customer } from '../../lib/types/customers';
 import NavLinks from '../../components/NavLinks/NavLinks';
 import { getCustomers, addCustomer, updateCustomer, deleteCustomer } from '../../lib/api/customerAPI';
@@ -13,6 +14,7 @@ const Customers: React.FC = () => {
   const [showFilterForm, setShowFilterForm] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState('');
   const [filterCustomerName, setFilterCustomerName] = useState('');
+  const [filterOrder, setFilterOrder] = useState('desc');
   const [editCustomerId, setEditCustomerId] = useState<number | null>(null);
   const [editCustomerName, setEditCustomerName] = useState('');
 
@@ -58,6 +60,7 @@ const Customers: React.FC = () => {
   const handleFilterCustomer = async () => {
     const params = {
       name: filterCustomerName,
+      order: filterOrder,
     };
     const getCustomersResult = await getCustomers('/api/customers', params);
     if (getCustomersResult) {
@@ -139,6 +142,10 @@ const Customers: React.FC = () => {
               placeholder="Filtro..."
               value={filterCustomerName}
               onChange={(e) => setFilterCustomerName(e.target.value)}
+            />
+            <SelectInput
+              value={filterOrder}
+              onChange={(e) => setFilterOrder(e.target.value)}
             />
           </CustomerForm>
         )

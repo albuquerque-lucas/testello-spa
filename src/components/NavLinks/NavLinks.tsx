@@ -13,7 +13,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ links, onNavigate }) => {
         {links.map((link, index) => (
           <li
             key={index}
-            className={`page-item ${link.active ? 'active' : ''} ${link.url === null ? 'disabled' : ''}`}
+            className={`page-item ${link.active ? 'active' : ''} ${link.url === null ? 'disabled' : ''} mx-1`}
           >
             <button
               className="page-link"
