@@ -4,6 +4,7 @@ import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
 import CustomerForm from '../../components/Forms/CustomerForm';
 import Input from '../../components/Inputs/Input';
 import { Customer } from '../../lib/types/customers';
+import NavLinks from '../../components/NavLinks/NavLinks';
 import { getCustomers, addCustomer, updateCustomer, deleteCustomer } from '../../lib/api/customerAPI';
 
 const Customers: React.FC = () => {
@@ -26,7 +27,7 @@ const Customers: React.FC = () => {
       alert(`Cliente com id: ${id} editado com sucesso!`);
     }
   };
-
+  
   const handleDelete = async (id: number) => {
     if (window.confirm('Tem certeza de que deseja excluir este cliente?')) {
       const deleteResult = await deleteCustomer(id);
@@ -53,7 +54,7 @@ const Customers: React.FC = () => {
       setNewCustomerName('');
     }
   };
-
+  
   const handleFilterCustomer = () => {
     alert(`Filtrar cliente com nome: ${filterCustomerName}`);
   };
@@ -90,6 +91,15 @@ const Customers: React.FC = () => {
     }
   };
 
+  const handleNavigate = async (url: string | null) => {
+    if (url) {
+      const getCustomersResult = await getCustomers(url);
+      if (getCustomersResult) {
+        setCustomers(getCustomersResult);
+      }
+    }
+  };
+
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -123,6 +133,9 @@ const Customers: React.FC = () => {
           />
         </CustomerForm>
       )}
+      <div className='d-flex justify-content-center'>
+        <NavLinks links={customers?.links || []} onNavigate={handleNavigate} />
+      </div>
       <table className="table table-hover">
         <thead>
           <tr>

@@ -2,9 +2,9 @@ import { axios } from '../axios';
 import { Customer } from '../types/customers';
 import { APIPaginatedResponse } from '../types/responses';
 
-export const getCustomers = async (): Promise<APIPaginatedResponse<Customer> | null> => {
+export const getCustomers = async (url: string = '/api/customers'): Promise<APIPaginatedResponse<Customer> | null> => {
   try {
-    const response = await axios.get<APIPaginatedResponse<Customer>>('/api/customers');
+    const response = await axios.get<APIPaginatedResponse<Customer>>(url);
     return response.data;
   } catch (error: any) {
     console.log('Ocorreu um erro tentando buscar os clientes', error);
