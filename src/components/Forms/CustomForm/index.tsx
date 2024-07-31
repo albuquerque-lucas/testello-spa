@@ -1,12 +1,12 @@
 import React, { FC, ReactNode } from 'react';
 
-interface CustomerFormProps {
+interface CustomFormProps {
   buttonText: string;
   handleAddCustomer: () => void;
   children: ReactNode;
 }
 
-const CustomerForm: FC<CustomerFormProps> = ({ buttonText, handleAddCustomer, children }) => {
+const CustomForm: FC<CustomFormProps> = ({ buttonText, handleAddCustomer, children }) => {
   return (
     <div className="mb-4">
       { children }
@@ -17,4 +17,4 @@ const CustomerForm: FC<CustomerFormProps> = ({ buttonText, handleAddCustomer, ch
   );
 };
 
-export default CustomerForm;
+export default CustomForm;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
-import CustomerForm from '../../components/Forms/CustomerForm';
+import CustomForm from '../../components/Forms/CustomForm';
 import Input from '../../components/Inputs/Input';
 import SelectInput from '../../components/Inputs/SelectInput';
 import { Customer } from '../../lib/types/customers';
@@ -73,14 +73,14 @@ const Customers: React.FC = () => {
     }
   };
   
-  const toggleAddCustomerForm = () => {
+  const toggleAddCustomForm = () => {
     setShowForm(!showForm);
     if (showFilterForm) {
       setShowFilterForm(false);
     }
   };
 
-  const toggleFilterCustomerForm = () => {
+  const toggleFilterCustomForm = () => {
     setShowFilterForm(!showFilterForm);
     if (showForm) {
       setShowForm(false);
@@ -119,29 +119,29 @@ const Customers: React.FC = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h3>Dashboard de Clientes</h3>
         <div>
-          <button className="btn btn-dark me-2" onClick={toggleAddCustomerForm}>
+          <button className="btn btn-dark me-2" onClick={toggleAddCustomForm}>
             {showForm ? 'Cancelar' : 'Adicionar Cliente'}
           </button>
-          <button className="btn btn-dark" onClick={toggleFilterCustomerForm}>
+          <button className="btn btn-dark" onClick={toggleFilterCustomForm}>
             {showFilterForm ? 'Cancelar' : 'Filtrar Cliente'}
           </button>
         </div>
       </div>
       {
         showForm && (
-          <CustomerForm buttonText="Adicionar" handleAddCustomer={handleAddCustomer}>
+          <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddCustomer}>
             <Input
               type="text"
               placeholder="Nome do cliente"
               value={newCustomerName}
               onChange={(e) => setNewCustomerName(e.target.value)}
             />
-          </CustomerForm>
+          </CustomForm>
         )
       }
       {
         showFilterForm && (
-          <CustomerForm buttonText="Filtrar" handleAddCustomer={handleFilterCustomer}>
+          <CustomForm buttonText="Filtrar" handleAddCustomer={handleFilterCustomer}>
             <Input
               type="text"
               placeholder="Filtro..."
@@ -152,7 +152,7 @@ const Customers: React.FC = () => {
               value={filterOrder}
               onChange={(e) => setFilterOrder(e.target.value)}
             />
-          </CustomerForm>
+          </CustomForm>
         )
       }
       <div className='d-flex justify-content-center'>
