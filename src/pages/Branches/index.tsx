@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import useBranchData from '../../lib/hooks/Branch/useBranchData';
-import CustomerForm from '../../components/Forms/CustomerForm'; // Usando o mesmo formulário
+import CustomerForm from '../../components/Forms/CustomerForm';
 import Input from '../../components/Inputs/Input';
 import SelectInput from '../../components/Inputs/SelectInput';
 import { Branch } from '../../lib/types/branches';

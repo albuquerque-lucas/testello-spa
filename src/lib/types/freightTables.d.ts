@@ -2,8 +2,8 @@ import { APIPaginatedResponse, NavigationLink } from "./responses";
 
 export type FreightTable = {
   id: number;
-  branch_id: number;
-  customer_id: number;
+  branch_id?: number;
+  customer_id?: number;
   from_postcode: string;
   to_postcode: string;
   from_weight: number;
