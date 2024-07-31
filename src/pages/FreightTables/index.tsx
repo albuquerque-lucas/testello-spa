@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import useFreightTableData from '../../lib/hooks/FreightTable/useFreightTableData';
-import CustomerForm from '../../components/Forms/CustomerForm'; // Usando o mesmo formulário
+import CustomerForm from '../../components/Forms/CustomerForm';
 import Input from '../../components/Inputs/Input';
 import SelectInput from '../../components/Inputs/SelectInput';
 import { FreightTable } from '../../lib/types/freightTables';
 import NavLinks from '../../components/NavLinks/NavLinks';
+import {
+  getFreightTables,
+  addFreightTable,
+  updateFreightTable,
+  deleteFreightTable
+} from '../../lib/api/freightTableAPI';
 
 const FreightTables: React.FC = () => {
   const { freightTables, setFreightTables } = useFreightTableData();
@@ -31,36 +37,91 @@ const FreightTables: React.FC = () => {
   const [editCost, setEditCost] = useState(0);
   const [editName, setEditName] = useState('');
 
-  const handleEdit = (id: number) => {
-    alert(`Editar tabela de frete com id: ${id}`);
+  const handleEdit = async (id: number) => {
+    const editedFreightTable = {
+      branch_id: editBranchId,
+      customer_id: editCustomerId,
+      from_postcode: editFromPostcode,
+      to_postcode: editToPostcode,
+      from_weight: editFromWeight,
+      to_weight: editToWeight,
+      cost: editCost,
+      name: editName,
+    };
+    const editResult = await updateFreightTable(id, editedFreightTable);
+    const getFreightTablesResult = await getFreightTables();
+    if (editResult && getFreightTablesResult) {
+      setFreightTables(getFreightTablesResult);
+      alert(`Tabela de frete com id: ${id} editada com sucesso!`);
+    }
   };
-
-  const handleDelete = (id: number) => {
-    alert(`Deletar tabela de frete com id: ${id}`);
+  
+  const handleDelete = async (id: number) => {
+    if (window.confirm('Tem certeza de que deseja excluir esta tabela de frete?')) {
+      const deleteResult = await deleteFreightTable([id]);
+      const getFreightTablesResult = await getFreightTables();
+      if (deleteResult && getFreightTablesResult) {
+        setFreightTables(getFreightTablesResult);
+        alert(`Tabela de frete com id: ${id} deletada com sucesso!`);
+      }
+    }
   };
-
-  const handleAddFreightTable = () => {
-    alert('Adicionar nova tabela de frete');
+  
+  const handleAddFreightTable = async () => {
+    if (!name || !fromPostcode || !toPostcode || !cost) {
+      alert('Todos os campos são obrigatórios.');
+      return;
+    }
+    const newFreightTable = {
+      branch_id: branchId,
+      customer_id: customerId,
+      from_postcode: fromPostcode,
+      to_postcode: toPostcode,
+      from_weight: fromWeight,
+      to_weight: toWeight,
+      cost: cost,
+      name: name,
+    };
+    const postResult = await addFreightTable(newFreightTable);
+    const getFreightTablesResult = await getFreightTables();
+    if (postResult && getFreightTablesResult) {
+      setFreightTables(getFreightTablesResult);
+      setBranchId(undefined);
+      setCustomerId(undefined);
+      setFromPostcode('');
+      setToPostcode('');
+      setFromWeight(0);
+      setToWeight(0);
+      setCost(0);
+      setName('');
+    }
   };
-
-  const handleFilterFreightTable = () => {
-    alert(`Filtrar tabela de frete com nome: ${filterBranchId} e ordem: ${filterOrder}`);
+  
+  const handleFilterFreightTable = async () => {
+    const params = {
+      branch_id: filterBranchId,
+      order: filterOrder,
+    };
+    const getFreightTablesResult = await getFreightTables('/api/freight-tables', params);
+    if (getFreightTablesResult) {
+      setFreightTables(getFreightTablesResult);
+    }
   };
-
+  
   const toggleAddFreightTableForm = () => {
     setShowForm(!showForm);
     if (showFilterForm) {
       setShowFilterForm(false);
     }
   };
-
+  
   const toggleFilterFreightTableForm = () => {
     setShowFilterForm(!showFilterForm);
     if (showForm) {
       setShowForm(false);
     }
   };
-
+  
   const startEditing = (freightTable: FreightTable) => {
     setEditFreightTableId(freightTable.id);
     setEditBranchId(freightTable.branch_id);
@@ -72,7 +133,7 @@ const FreightTables: React.FC = () => {
     setEditCost(freightTable.cost);
     setEditName(freightTable.name);
   };
-
+  
   const cancelEditing = () => {
     setEditFreightTableId(null);
     setEditBranchId(undefined);
@@ -84,18 +145,31 @@ const FreightTables: React.FC = () => {
     setEditCost(0);
     setEditName('');
   };
-
-  const confirmEditing = () => {
+  
+  const confirmEditing = async () => {
     if (editFreightTableId !== null) {
-      handleEdit(editFreightTableId);
-      cancelEditing();
+      await handleEdit(editFreightTableId);
+      setEditFreightTableId(null);
+      setEditBranchId(undefined);
+      setEditCustomerId(undefined);
+      setEditFromPostcode('');
+      setEditToPostcode('');
+      setEditFromWeight(0);
+      setEditToWeight(0);
+      setEditCost(0);
+      setEditName('');
     }
   };
-
-  const handleNavigate = (url: string | null) => {
-    alert(`Navegar para: ${url}`);
+  
+  const handleNavigate = async (url: string | null) => {
+    if (url) {
+      const getFreightTablesResult = await getFreightTables(url);
+      if (getFreightTablesResult) {
+        setFreightTables(getFreightTablesResult);
+      }
+    }
   };
-
+  
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -189,7 +263,6 @@ const FreightTables: React.FC = () => {
             <th>Peso de Origem</th>
             <th>Peso de Destino</th>
             <th>Custo</th>
-            <th>Nome</th>
             <th className="text-end">Ações</th>
           </tr>
         </thead>
@@ -281,19 +354,7 @@ const FreightTables: React.FC = () => {
                   freightTable.cost
                 )}
               </td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="text"
-                    value={editName}
-                    placeholder="Nome"
-                    onChange={(e) => setEditName(e.target.value)}
-                  />
-                ) : (
-                  freightTable.name
-                )}
-              </td>
-              <td className="text-end">
+              <td className="text-end" style={{ width: '120px'}}>
                 {editFreightTableId === freightTable.id ? (
                   <>
                     <button
