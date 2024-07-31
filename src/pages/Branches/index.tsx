@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import useBranchData from '../../lib/hooks/Branch/useBranchData';
-import CustomerForm from '../../components/Forms/CustomerForm';
+import CustomForm from '../../components/Forms/CustomForm';
 import Input from '../../components/Inputs/Input';
 import SelectInput from '../../components/Inputs/SelectInput';
 import { Branch } from '../../lib/types/branches';
@@ -145,7 +145,7 @@ const Branches: React.FC = () => {
       </div>
       {
         showForm && (
-          <CustomerForm buttonText="Adicionar" handleAddCustomer={handleAddBranch}>
+          <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddBranch}>
             <Input
               type="text"
               placeholder="Nome da filial"
@@ -158,12 +158,12 @@ const Branches: React.FC = () => {
               value={newBranchLocation}
               onChange={(e) => setNewBranchLocation(e.target.value)}
             />
-          </CustomerForm>
+          </CustomForm>
         )
       }
       {
         showFilterForm && (
-          <CustomerForm buttonText="Filtrar" handleAddCustomer={handleFilterBranch}>
+          <CustomForm buttonText="Filtrar" handleAddCustomer={handleFilterBranch}>
             <Input
               type="text"
               placeholder="Filtrar por nome"
@@ -180,7 +180,7 @@ const Branches: React.FC = () => {
               value={filterOrder}
               onChange={(e) => setFilterOrder(e.target.value)}
             />
-          </CustomerForm>
+          </CustomForm>
         )
       }
       <div className='d-flex justify-content-center'>

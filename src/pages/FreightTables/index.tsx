@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
 import useFreightTableData from '../../lib/hooks/FreightTable/useFreightTableData';
-import CustomerForm from '../../components/Forms/CustomerForm';
+import CustomForm from '../../components/Forms/CustomForm';
 import Input from '../../components/Inputs/Input';
 import SelectInput from '../../components/Inputs/SelectInput';
 import { FreightTable } from '../../lib/types/freightTables';
@@ -12,6 +12,7 @@ import {
   updateFreightTable,
   deleteFreightTable
 } from '../../lib/api/freightTableAPI';
+import CsvFormModal from '../../components/Modals/CsvFormModal';
 
 const FreightTables: React.FC = () => {
   const { freightTables, setFreightTables } = useFreightTableData();
@@ -36,6 +37,7 @@ const FreightTables: React.FC = () => {
   const [editToWeight, setEditToWeight] = useState(0);
   const [editCost, setEditCost] = useState(0);
   const [editName, setEditName] = useState('');
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   const handleEdit = async (id: number) => {
     const editedFreightTable = {
@@ -121,6 +123,9 @@ const FreightTables: React.FC = () => {
       setShowForm(false);
     }
   };
+
+  const handleShowUploadModal = () => setShowUploadModal(true);
+  const handleCloseUploadModal = () => setShowUploadModal(false); 
   
   const startEditing = (freightTable: FreightTable) => {
     setEditFreightTableId(freightTable.id);
@@ -178,13 +183,17 @@ const FreightTables: React.FC = () => {
           <button className="btn btn-dark me-2" onClick={toggleAddFreightTableForm}>
             {showForm ? 'Cancelar' : 'Adicionar Tabela de Frete'}
           </button>
-          <button className="btn btn-dark" onClick={toggleFilterFreightTableForm}>
+          <button className="btn btn-dark me-2" onClick={toggleFilterFreightTableForm}>
             {showFilterForm ? 'Cancelar' : 'Filtrar Tabela de Frete'}
+          </button>
+          <button className="btn btn-dark" onClick={handleShowUploadModal}>
+            Upload CSV
           </button>
         </div>
       </div>
+        <CsvFormModal show={showUploadModal} handleClose={handleCloseUploadModal} />
       {showForm && (
-        <CustomerForm buttonText="Adicionar" handleAddCustomer={handleAddFreightTable}>
+        <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddFreightTable}>
           <Input
             type="number"
             placeholder="ID da Filial"
@@ -227,10 +236,10 @@ const FreightTables: React.FC = () => {
             value={cost}
             onChange={(e) => setCost(Number(e.target.value))}
           />
-        </CustomerForm>
+        </CustomForm>
       )}
       {showFilterForm && (
-        <CustomerForm buttonText="Filtrar" handleAddCustomer={handleFilterFreightTable}>
+        <CustomForm buttonText="Filtrar" handleAddCustomer={handleFilterFreightTable}>
           <Input
             type="text"
             placeholder="Filtro por ID da Filial"
@@ -241,7 +250,7 @@ const FreightTables: React.FC = () => {
             value={filterOrder}
             onChange={(e) => setFilterOrder(e.target.value)}
           />
-        </CustomerForm>
+        </CustomForm>
       )}
       <div className='d-flex justify-content-center'>
         <NavLinks links={freightTables?.links || []} onNavigate={handleNavigate} />
@@ -261,136 +270,138 @@ const FreightTables: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {freightTables?.data.map((freightTable: FreightTable) => (
-            <tr key={freightTable.id}>
-              <td>{freightTable.id}</td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="number"
-                    value={editBranchId || ''}
-                    placeholder="ID da Filial"
-                    onChange={(e) => setEditBranchId(Number(e.target.value))}
-                  />
-                ) : (
-                  freightTable.branch_id
-                )}
-              </td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="number"
-                    value={editCustomerId || ''}
-                    placeholder="ID do Cliente"
-                    onChange={(e) => setEditCustomerId(Number(e.target.value))}
-                  />
-                ) : (
-                  freightTable.customer_id
-                )}
-              </td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="text"
-                    value={editFromPostcode}
-                    placeholder="Código de Origem"
-                    onChange={(e) => setEditFromPostcode(e.target.value)}
-                  />
-                ) : (
-                  freightTable.from_postcode
-                )}
-              </td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="text"
-                    value={editToPostcode}
-                    placeholder="Código de Destino"
-                    onChange={(e) => setEditToPostcode(e.target.value)}
-                  />
-                ) : (
-                  freightTable.to_postcode
-                )}
-              </td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="number"
-                    value={editFromWeight}
-                    placeholder="Peso de Origem"
-                    onChange={(e) => setEditFromWeight(Number(e.target.value))}
-                  />
-                ) : (
-                  freightTable.from_weight
-                )}
-              </td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="number"
-                    value={editToWeight}
-                    placeholder="Peso de Destino"
-                    onChange={(e) => setEditToWeight(Number(e.target.value))}
-                  />
-                ) : (
-                  freightTable.to_weight
-                )}
-              </td>
-              <td>
-                {editFreightTableId === freightTable.id ? (
-                  <Input
-                    type="number"
-                    value={editCost}
-                    placeholder="Custo"
-                    onChange={(e) => setEditCost(Number(e.target.value))}
-                  />
-                ) : (
-                  freightTable.cost
-                )}
-              </td>
-              <td className="text-end" style={{ width: '120px'}}>
-                {editFreightTableId === freightTable.id ? (
-                  <>
-                    <button
-                      className="btn btn-success btn-sm me-2"
-                      onClick={confirmEditing}
-                      data-bs-toggle="tooltip"
-                      title="Confirmar Edição"
-                    >
-                      <FaCheck />
-                    </button>
-                    <button
-                      className="btn btn-secondary btn-sm"
-                      onClick={cancelEditing}
-                      data-bs-toggle="tooltip"
-                      title="Cancelar Edição"
-                    >
-                      <FaTimes />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      className="btn btn-primary btn-sm me-2"
-                      onClick={() => startEditing(freightTable)}
-                      data-bs-toggle="tooltip"
-                      title="Editar Tabela de Frete"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(freightTable.id)}
-                      data-bs-toggle="tooltip"
-                      title="Deletar Tabela de Frete"
-                    >
-                      <FaTrash />
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
+          {
+            freightTables?.data.map((freightTable: FreightTable) => (
+              <tr key={freightTable.id}>
+                <td>{freightTable.id}</td>
+                <td>
+                  {editFreightTableId === freightTable.id ? (
+                    <Input
+                      type="number"
+                      value={editBranchId || ''}
+                      placeholder="ID da Filial"
+                      onChange={(e) => setEditBranchId(Number(e.target.value))}
+                    />
+                  ) : (
+                    freightTable.branch_id
+                  )}
+                </td>
+                <td>
+                  {editFreightTableId === freightTable.id ? (
+                    <Input
+                      type="number"
+                      value={editCustomerId || ''}
+                      placeholder="ID do Cliente"
+                      onChange={(e) => setEditCustomerId(Number(e.target.value))}
+                    />
+                  ) : (
+                    freightTable.customer_id
+                  )}
+                </td>
+                <td>
+                  {editFreightTableId === freightTable.id ? (
+                    <Input
+                      type="text"
+                      value={editFromPostcode}
+                      placeholder="Código de Origem"
+                      onChange={(e) => setEditFromPostcode(e.target.value)}
+                    />
+                  ) : (
+                    freightTable.from_postcode
+                  )}
+                </td>
+                <td>
+                  {editFreightTableId === freightTable.id ? (
+                    <Input
+                      type="text"
+                      value={editToPostcode}
+                      placeholder="Código de Destino"
+                      onChange={(e) => setEditToPostcode(e.target.value)}
+                    />
+                  ) : (
+                    freightTable.to_postcode
+                  )}
+                </td>
+                <td>
+                  {editFreightTableId === freightTable.id ? (
+                    <Input
+                      type="number"
+                      value={editFromWeight}
+                      placeholder="Peso de Origem"
+                      onChange={(e) => setEditFromWeight(Number(e.target.value))}
+                    />
+                  ) : (
+                    freightTable.from_weight
+                  )}
+                </td>
+                <td>
+                  {editFreightTableId === freightTable.id ? (
+                    <Input
+                      type="number"
+                      value={editToWeight}
+                      placeholder="Peso de Destino"
+                      onChange={(e) => setEditToWeight(Number(e.target.value))}
+                    />
+                  ) : (
+                    freightTable.to_weight
+                  )}
+                </td>
+                <td>
+                  {editFreightTableId === freightTable.id ? (
+                    <Input
+                      type="number"
+                      value={editCost}
+                      placeholder="Custo"
+                      onChange={(e) => setEditCost(Number(e.target.value))}
+                    />
+                  ) : (
+                    freightTable.cost
+                  )}
+                </td>
+                <td className="text-end" style={{ width: '120px'}}>
+                  {editFreightTableId === freightTable.id ? (
+                    <>
+                      <button
+                        className="btn btn-success btn-sm me-2"
+                        onClick={confirmEditing}
+                        data-bs-toggle="tooltip"
+                        title="Confirmar Edição"
+                      >
+                        <FaCheck />
+                      </button>
+                      <button
+                        className="btn btn-secondary btn-sm"
+                        onClick={cancelEditing}
+                        data-bs-toggle="tooltip"
+                        title="Cancelar Edição"
+                      >
+                        <FaTimes />
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="btn btn-primary btn-sm me-2"
+                        onClick={() => startEditing(freightTable)}
+                        data-bs-toggle="tooltip"
+                        title="Editar Tabela de Frete"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(freightTable.id)}
+                        data-bs-toggle="tooltip"
+                        title="Deletar Tabela de Frete"
+                      >
+                        <FaTrash />
+                      </button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </div>
