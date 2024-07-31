@@ -1,4 +1,4 @@
-import { axios } from '../axios';
+import { axios, axiosFormData } from '../axios';
 import { FreightTable } from '../types/freightTables';
 import { APIPaginatedResponse } from '../types/responses';
 
@@ -39,5 +39,20 @@ export const deleteFreightTable = async (ids: number[]): Promise<boolean> => {
   } catch (error: any) {
     console.log('Ocorreu um erro tentando deletar as tabelas de frete', error);
     return false;
+  }
+}
+
+export const uploadFreightCsv = async (files: FileList): Promise<{ message: string } | { error: string } | null> => {
+  try {
+    const formData = new FormData();
+    Array.from(files).forEach(file => {
+      formData.append('csv_file[]', file);
+    });
+
+    const response = await axiosFormData.post<{ message: string }>('api/upload-freight-csv', formData);
+    return response.data;
+  } catch (error: any) {
+    console.log('Ocorreu um erro tentando fazer upload dos arquivos CSV', error);
+    return null;
   }
 }

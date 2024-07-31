@@ -8,3 +8,12 @@ export const axios = Axios.create({
     'Accept': 'application/json',
   },
 });
+
+export const axiosFormData = Axios.create({
+  baseURL: 'http://localhost',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'Accept': 'application/json',
+  },
+});
