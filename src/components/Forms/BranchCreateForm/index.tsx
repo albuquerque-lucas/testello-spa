@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 interface BranchCreateFormProps {
   name: string;
@@ -8,7 +8,7 @@ interface BranchCreateFormProps {
   handleAddBranch: () => void;
 }
 
-const BranchCreateForm: FC<BranchCreateFormProps> = ({ name, location, setName, setLocation, handleAddBranch }) => {
+const BranchCreateForm: React.FC<BranchCreateFormProps> = ({ name, location, setName, setLocation, handleAddBranch }) => {
   return (
     <div className="mb-4">
       <input

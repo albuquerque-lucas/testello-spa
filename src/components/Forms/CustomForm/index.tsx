@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface CustomFormProps {
   buttonText: string;
@@ -6,7 +6,7 @@ interface CustomFormProps {
   children: ReactNode;
 }
 
-const CustomForm: FC<CustomFormProps> = ({ buttonText, handleAddCustomer, children }) => {
+const CustomForm: React.FC<CustomFormProps> = ({ buttonText, handleAddCustomer, children }) => {
   return (
     <div className="mb-4">
       { children }

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 interface FreightTableCreateFormProps {
   branchId: number;
@@ -18,7 +18,7 @@ interface FreightTableCreateFormProps {
   handleAddFreightTable: () => void;
 }
 
-const FreightTableCreateForm: FC<FreightTableCreateFormProps> = ({
+const FreightTableCreateForm: React.FC<FreightTableCreateFormProps> = ({
   branchId,
   customerId,
   fromPostcode,

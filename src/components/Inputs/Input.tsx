@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 interface CustomInputProps {
   type: string;
@@ -7,7 +7,7 @@ interface CustomInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: FC<CustomInputProps> = ({ type, placeholder, value, onChange }) => {
+const Input: React.FC<CustomInputProps> = ({ type, placeholder, value, onChange }) => {
   return (
     <input
       type={type}
