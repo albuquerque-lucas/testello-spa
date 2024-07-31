@@ -6,7 +6,12 @@ import Input from '../../components/Inputs/Input';
 import SelectInput from '../../components/Inputs/SelectInput';
 import { Customer } from '../../lib/types/customers';
 import NavLinks from '../../components/NavLinks/NavLinks';
-import { getCustomers, addCustomer, updateCustomer, deleteCustomer } from '../../lib/api/customerAPI';
+import {
+  getCustomers,
+  addCustomer,
+  updateCustomer,
+  deleteCustomer,
+} from '../../lib/api/customerAPI';
 
 const Customers: React.FC = () => {
   const { customers, setCustomers } = useCustomerData();
