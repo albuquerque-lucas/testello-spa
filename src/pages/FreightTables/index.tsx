@@ -12,6 +12,7 @@ import {
   updateFreightTable,
   deleteFreightTable
 } from '../../lib/api/freightTableAPI';
+import CsvFormModal from '../../components/Modals/CsvFormModal';
 
 const FreightTables: React.FC = () => {
   const { freightTables, setFreightTables } = useFreightTableData();
@@ -36,6 +37,7 @@ const FreightTables: React.FC = () => {
   const [editToWeight, setEditToWeight] = useState(0);
   const [editCost, setEditCost] = useState(0);
   const [editName, setEditName] = useState('');
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   const handleEdit = async (id: number) => {
     const editedFreightTable = {
@@ -121,6 +123,9 @@ const FreightTables: React.FC = () => {
       setShowForm(false);
     }
   };
+
+  const handleShowUploadModal = () => setShowUploadModal(true);
+  const handleCloseUploadModal = () => setShowUploadModal(false); 
   
   const startEditing = (freightTable: FreightTable) => {
     setEditFreightTableId(freightTable.id);
@@ -178,11 +183,15 @@ const FreightTables: React.FC = () => {
           <button className="btn btn-dark me-2" onClick={toggleAddFreightTableForm}>
             {showForm ? 'Cancelar' : 'Adicionar Tabela de Frete'}
           </button>
-          <button className="btn btn-dark" onClick={toggleFilterFreightTableForm}>
+          <button className="btn btn-dark me-2" onClick={toggleFilterFreightTableForm}>
             {showFilterForm ? 'Cancelar' : 'Filtrar Tabela de Frete'}
+          </button>
+          <button className="btn btn-dark" onClick={handleShowUploadModal}>
+            Upload CSV
           </button>
         </div>
       </div>
+        <CsvFormModal show={showUploadModal} handleClose={handleCloseUploadModal} />
       {showForm && (
         <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddFreightTable}>
           <Input
