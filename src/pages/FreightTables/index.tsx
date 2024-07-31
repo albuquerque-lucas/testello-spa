@@ -227,12 +227,6 @@ const FreightTables: React.FC = () => {
             value={cost}
             onChange={(e) => setCost(Number(e.target.value))}
           />
-          <Input
-            type="text"
-            placeholder="Nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
         </CustomerForm>
       )}
       {showFilterForm && (
