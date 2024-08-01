@@ -9,7 +9,7 @@ const Home = () => {
         <li className="mb-3 mb-md-0 mx-md-2">
           <NavLink
             to="/fretes"
-            className="btn btn-secondary btn-lg w-100"
+            className="btn btn-secondary w-100"
           >
             Fretes
           </NavLink>
@@ -17,7 +17,7 @@ const Home = () => {
         <li className="mb-3 mb-md-0 mx-md-2">
           <NavLink
             to="/filiais"
-            className="btn btn-secondary btn-lg w-100"
+            className="btn btn-secondary w-100"
           >
             Filiais
           </NavLink>
@@ -25,7 +25,7 @@ const Home = () => {
         <li className="mx-md-2">
           <NavLink
             to="/clientes"
-            className="btn btn-secondary btn-lg w-100"
+            className="btn btn-secondary w-100"
           >
             Clientes
           </NavLink>
