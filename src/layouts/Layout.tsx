@@ -11,7 +11,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <footer className="bg-dark text-white py-3 text-center">
-        © 2024 Testello. Todos os direitos reservados.
+        © 2024 Testello.
       </footer>
     </div>
   );
