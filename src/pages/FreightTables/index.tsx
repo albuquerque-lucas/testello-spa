@@ -10,9 +10,11 @@ import {
   getFreightTables,
   addFreightTable,
   updateFreightTable,
-  deleteFreightTable
+  deleteFreightTable,
+  bulkDeleteFreightTables,
 } from '../../lib/api/freightTableAPI';
 import CsvFormModal from '../../components/Modals/CsvFormModal';
+import DeleteAllModal from '../../components/Modals/DeleteAllModal';
 
 const FreightTables: React.FC = () => {
   const { freightTables, setFreightTables } = useFreightTableData();
@@ -38,6 +40,21 @@ const FreightTables: React.FC = () => {
   const [editCost, setEditCost] = useState(0);
   const [editName, setEditName] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [deleteAllMode, setDeleteAllMode] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
+
+  const handleDeleteAll = async () => {
+    const deleteResult = await bulkDeleteFreightTables();
+    const getFreightTablesResult = await getFreightTables();
+    if (deleteResult && getFreightTablesResult) {
+      setFreightTables(getFreightTablesResult);
+    }
+    setShowDeleteModal(false);
+    setDeleteAllMode(false);
+  }
 
   const handleEdit = async (id: number) => {
     const editedFreightTable = {
@@ -177,7 +194,24 @@ const FreightTables: React.FC = () => {
     <div className="container mt-5">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
         <h3>Dashboard de Tabelas de Frete</h3>
-        <div className="d-flex flex-column flex-md-row">
+        <div className="d-flex flex-column flex-md-row align-items-center">
+        <div className="d-flex align-items-center mb-2 mb-md-0 me-md-2">
+          <input type="checkbox" name="" id="" className="me-2" onChange={() => setDeleteAllMode(!deleteAllMode)} checked={deleteAllMode}/>
+          <div
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title={deleteAllMode ? "Isso irá deletar tudo." : "Marque o checkbox para ativar"}
+          >
+            <button
+              className="btn btn-danger"
+              onClick={handleShowDeleteModal}
+              disabled={!deleteAllMode}
+            >
+              Deletar Tudo
+            </button>
+          </div>
+        </div>
+
           <button className="btn btn-dark me-md-2 mb-2 mb-md-0" onClick={toggleAddFreightTableForm}>
             {showForm ? 'Cancelar' : 'Adicionar Tabela de Frete'}
           </button>
@@ -185,11 +219,16 @@ const FreightTables: React.FC = () => {
             {showFilterForm ? 'Cancelar' : 'Filtrar Tabela de Frete'}
           </button>
           <button className="btn btn-dark mb-2 mb-md-0" onClick={handleShowUploadModal}>
-            Upload CSV
+            Adicionar por CSV
           </button>
         </div>
       </div>
       <CsvFormModal show={showUploadModal} handleClose={handleCloseUploadModal} />
+      <DeleteAllModal
+      show={showDeleteModal}
+      handleClose={handleCloseDeleteModal}
+      handleDelete={handleDeleteAll}
+      />
       {showForm && (
         <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddFreightTable}>
           <Input

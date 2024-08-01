@@ -65,3 +65,15 @@ export const uploadFreightCsv = async (files: FileList): Promise<{ message: stri
     return null;
   }
 }
+
+export const bulkDeleteFreightTables = async (): Promise<boolean> => {
+  try {
+    await axios.post('/api/freight-tables/bulkDelete');
+    toast.success('Todos os registros da tabela de frete foram deletados com sucesso');
+    return true;
+  } catch (error: any) {
+    toast.error('Ocorreu um erro tentando deletar todos os registros da tabela de frete');
+    console.log('Ocorreu um erro tentando deletar todos os registros da tabela de frete', error);
+    return false;
+  }
+}
