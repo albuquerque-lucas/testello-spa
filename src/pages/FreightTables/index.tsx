@@ -54,7 +54,6 @@ const FreightTables: React.FC = () => {
     const getFreightTablesResult = await getFreightTables();
     if (editResult && getFreightTablesResult) {
       setFreightTables(getFreightTablesResult);
-      alert(`Tabela de frete com id: ${id} editada com sucesso!`);
     }
   };
   
@@ -64,7 +63,6 @@ const FreightTables: React.FC = () => {
       const getFreightTablesResult = await getFreightTables();
       if (deleteResult && getFreightTablesResult) {
         setFreightTables(getFreightTablesResult);
-        alert(`Tabela de frete com id: ${id} deletada com sucesso!`);
       }
     }
   };
