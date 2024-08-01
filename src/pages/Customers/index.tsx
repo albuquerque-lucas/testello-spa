@@ -32,7 +32,6 @@ const Customers: React.FC = () => {
     const getCustomersResult = await getCustomers();
     if (editResult && getCustomersResult) {
       setCustomers(getCustomersResult);
-      alert(`Cliente com id: ${id} editado com sucesso!`);
     }
   };
   
@@ -42,7 +41,6 @@ const Customers: React.FC = () => {
       const getCustomersResult = await getCustomers();
       if (deleteResult && getCustomersResult) {
         setCustomers(getCustomersResult);
-        // toast('Cliente deletado com sucesso!', { type: 'success' });
       }
     }
   };

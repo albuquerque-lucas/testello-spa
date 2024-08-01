@@ -41,7 +41,6 @@ const Branches: React.FC = () => {
     const getBranchesResult = await getBranches();
     if (editResult && getBranchesResult) {
       setBranches(getBranchesResult);
-      alert(`Filial com id: ${id} editada com sucesso!`);
     }
   };
 
