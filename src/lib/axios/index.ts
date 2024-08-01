@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 export const axios = Axios.create({
-  baseURL: 'http://www.albuquerqueincode.com',
+  baseURL: 'https://www.albuquerqueincode.com',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -10,7 +10,7 @@ export const axios = Axios.create({
 });
 
 export const axiosFormData = Axios.create({
-  baseURL: 'http://www.albuquerqueincode.com',
+  baseURL: 'https://www.albuquerqueincode.com',
   timeout: 10000,
   headers: {
     'Content-Type': 'multipart/form-data',
