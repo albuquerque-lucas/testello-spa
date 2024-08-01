@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
-import { toast } from 'react-toastify';
 import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
 import CustomForm from '../../components/Forms/CustomForm';
 import Input from '../../components/Inputs/Input';
