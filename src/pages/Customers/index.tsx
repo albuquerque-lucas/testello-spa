@@ -114,13 +114,13 @@ const Customers: React.FC = () => {
 
   return (
     <div className="container mt-5">
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
         <h3>Dashboard de Clientes</h3>
-        <div>
-          <button className="btn btn-dark me-2" onClick={toggleAddCustomForm}>
+        <div className="d-flex flex-column flex-md-row">
+          <button className="btn btn-dark me-md-2 mb-2 mb-md-0" onClick={toggleAddCustomForm}>
             {showForm ? 'Cancelar' : 'Adicionar Cliente'}
           </button>
-          <button className="btn btn-dark" onClick={toggleFilterCustomForm}>
+          <button className="btn btn-dark mb-2 mb-md-0" onClick={toggleFilterCustomForm}>
             {showFilterForm ? 'Cancelar' : 'Filtrar Cliente'}
           </button>
         </div>
@@ -180,7 +180,7 @@ const Customers: React.FC = () => {
                   customer.name
                 )}
               </td>
-              <td className="text-end">
+              <td className="text-end" style={{ width: '120px'}}>
                 {editCustomerId === customer.id ? (
                   <>
                     <button

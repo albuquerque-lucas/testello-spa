@@ -175,21 +175,21 @@ const FreightTables: React.FC = () => {
   
   return (
     <div className="container mt-5">
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
         <h3>Dashboard de Tabelas de Frete</h3>
-        <div>
-          <button className="btn btn-dark me-2" onClick={toggleAddFreightTableForm}>
+        <div className="d-flex flex-column flex-md-row">
+          <button className="btn btn-dark me-md-2 mb-2 mb-md-0" onClick={toggleAddFreightTableForm}>
             {showForm ? 'Cancelar' : 'Adicionar Tabela de Frete'}
           </button>
-          <button className="btn btn-dark me-2" onClick={toggleFilterFreightTableForm}>
+          <button className="btn btn-dark me-md-2 mb-2 mb-md-0" onClick={toggleFilterFreightTableForm}>
             {showFilterForm ? 'Cancelar' : 'Filtrar Tabela de Frete'}
           </button>
-          <button className="btn btn-dark" onClick={handleShowUploadModal}>
+          <button className="btn btn-dark mb-2 mb-md-0" onClick={handleShowUploadModal}>
             Upload CSV
           </button>
         </div>
       </div>
-        <CsvFormModal show={showUploadModal} handleClose={handleCloseUploadModal} />
+      <CsvFormModal show={showUploadModal} handleClose={handleCloseUploadModal} />
       {showForm && (
         <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddFreightTable}>
           <Input
@@ -257,12 +257,12 @@ const FreightTables: React.FC = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>ID da Filial</th>
-            <th>ID do Cliente</th>
+            <th className="d-none d-md-table-cell">ID da Filial</th>
+            <th className="d-none d-md-table-cell">ID do Cliente</th>
             <th>Código de Origem</th>
-            <th>Código de Destino</th>
-            <th>Peso de Origem</th>
-            <th>Peso de Destino</th>
+            <th className="d-none d-md-table-cell">Código de Destino</th>
+            <th className="d-none d-md-table-cell">Peso de Origem</th>
+            <th className="d-none d-md-table-cell">Peso de Destino</th>
             <th>Custo</th>
             <th className="text-end">Ações</th>
           </tr>
@@ -272,7 +272,7 @@ const FreightTables: React.FC = () => {
             freightTables?.data.map((freightTable: FreightTable) => (
               <tr key={freightTable.id}>
                 <td>{freightTable.id}</td>
-                <td>
+                <td className="d-none d-md-table-cell">
                   {editFreightTableId === freightTable.id ? (
                     <Input
                       type="number"
@@ -284,7 +284,7 @@ const FreightTables: React.FC = () => {
                     freightTable.branch_id
                   )}
                 </td>
-                <td>
+                <td className="d-none d-md-table-cell">
                   {editFreightTableId === freightTable.id ? (
                     <Input
                       type="number"
@@ -308,7 +308,7 @@ const FreightTables: React.FC = () => {
                     freightTable.from_postcode
                   )}
                 </td>
-                <td>
+                <td className="d-none d-md-table-cell">
                   {editFreightTableId === freightTable.id ? (
                     <Input
                       type="text"
@@ -320,7 +320,7 @@ const FreightTables: React.FC = () => {
                     freightTable.to_postcode
                   )}
                 </td>
-                <td>
+                <td className="d-none d-md-table-cell">
                   {editFreightTableId === freightTable.id ? (
                     <Input
                       type="number"
@@ -332,7 +332,7 @@ const FreightTables: React.FC = () => {
                     freightTable.from_weight
                   )}
                 </td>
-                <td>
+                <td className="d-none d-md-table-cell">
                   {editFreightTableId === freightTable.id ? (
                     <Input
                       type="number"

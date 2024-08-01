@@ -130,57 +130,53 @@ const Branches: React.FC = () => {
 
   return (
     <div className="container mt-5">
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
         <h3>Dashboard de Filiais</h3>
-        <div>
-          <button className="btn btn-dark me-2" onClick={toggleAddBranchForm}>
+        <div className="d-flex flex-column flex-md-row">
+          <button className="btn btn-dark me-md-2 mb-2 mb-md-0" onClick={toggleAddBranchForm}>
             {showForm ? 'Cancelar' : 'Adicionar Filial'}
           </button>
-          <button className="btn btn-dark" onClick={toggleFilterBranchForm}>
+          <button className="btn btn-dark mb-2 mb-md-0" onClick={toggleFilterBranchForm}>
             {showFilterForm ? 'Cancelar' : 'Filtrar Filial'}
           </button>
         </div>
       </div>
-      {
-        showForm && (
-          <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddBranch}>
-            <Input
-              type="text"
-              placeholder="Nome da filial"
-              value={newBranchName}
-              onChange={(e) => setNewBranchName(e.target.value)}
-            />
-            <Input
-              type="text"
-              placeholder="Localização da filial"
-              value={newBranchLocation}
-              onChange={(e) => setNewBranchLocation(e.target.value)}
-            />
-          </CustomForm>
-        )
-      }
-      {
-        showFilterForm && (
-          <CustomForm buttonText="Filtrar" handleAddCustomer={handleFilterBranch}>
-            <Input
-              type="text"
-              placeholder="Filtrar por nome"
-              value={filterBranchName}
-              onChange={(e) => setFilterBranchName(e.target.value)}
-            />
-            <Input
-              type="text"
-              placeholder="Filtrar por localidade"
-              value={filterBranchLocation}
-              onChange={(e) => setFilterBranchLocation(e.target.value)}
-            />
-            <SelectInput
-              value={filterOrder}
-              onChange={(e) => setFilterOrder(e.target.value)}
-            />
-          </CustomForm>
-        )
-      }
+      {showForm && (
+        <CustomForm buttonText="Adicionar" handleAddCustomer={handleAddBranch}>
+          <Input
+            type="text"
+            placeholder="Nome da filial"
+            value={newBranchName}
+            onChange={(e) => setNewBranchName(e.target.value)}
+          />
+          <Input
+            type="text"
+            placeholder="Localização da filial"
+            value={newBranchLocation}
+            onChange={(e) => setNewBranchLocation(e.target.value)}
+          />
+        </CustomForm>
+      )}
+      {showFilterForm && (
+        <CustomForm buttonText="Filtrar" handleAddCustomer={handleFilterBranch}>
+          <Input
+            type="text"
+            placeholder="Filtrar por nome"
+            value={filterBranchName}
+            onChange={(e) => setFilterBranchName(e.target.value)}
+          />
+          <Input
+            type="text"
+            placeholder="Filtrar por localidade"
+            value={filterBranchLocation}
+            onChange={(e) => setFilterBranchLocation(e.target.value)}
+          />
+          <SelectInput
+            value={filterOrder}
+            onChange={(e) => setFilterOrder(e.target.value)}
+          />
+        </CustomForm>
+      )}
       <div className='d-flex justify-content-center'>
         <NavLinks links={branches?.links || []} onNavigate={handleNavigate} />
       </div>
@@ -189,89 +185,81 @@ const Branches: React.FC = () => {
           <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>Localização</th>
+            <th className="d-none d-md-table-cell">Localização</th>
             <th className="text-end">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {
-            branches?.data.map((branch: Branch) => (
-              <tr key={branch.id}>
-                <td>{branch.id}</td>
-                <td>
-                  {
-                    editBranchId === branch.id ? (
-                      <Input
-                        type="text"
-                        value={editBranchName}
-                        placeholder="Nome da filial"
-                        onChange={(e) => setEditBranchName(e.target.value)}
-                      />
-                    ) : (
-                      branch.name
-                    )
-                  }
-                </td>
-                <td>
-                  {
-                    editBranchId === branch.id ? (
-                      <Input
-                        type="text"
-                        value={editBranchLocation}
-                        placeholder="Localização da filial"
-                        onChange={(e) => setEditBranchLocation(e.target.value)}
-                      />
-                    ) : (
-                      branch.location
-                    )
-                  }
-                </td>
-                <td className="text-end">
-                  {
-                    editBranchId === branch.id ? (
-                      <>
-                        <button
-                          className="btn btn-success btn-sm me-2"
-                          onClick={confirmEditing}
-                          data-bs-toggle="tooltip"
-                          title="Confirmar Edição"
-                        >
-                          <FaCheck />
-                        </button>
-                        <button
-                          className="btn btn-secondary btn-sm"
-                          onClick={cancelEditing}
-                          data-bs-toggle="tooltip"
-                          title="Cancelar Edição"
-                        >
-                          <FaTimes />
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          className="btn btn-primary btn-sm me-2"
-                          onClick={() => startEditing(branch)}
-                          data-bs-toggle="tooltip"
-                          title="Editar Filial"
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => handleDelete(branch.id)}
-                          data-bs-toggle="tooltip"
-                          title="Deletar Filial"
-                        >
-                          <FaTrash />
-                        </button>
-                      </>
-                    )
-                  }
-                </td>
-              </tr>
-            ))
-          }
+          {branches?.data.map((branch: Branch) => (
+            <tr key={branch.id}>
+              <td>{branch.id}</td>
+              <td>
+                {editBranchId === branch.id ? (
+                  <Input
+                    type="text"
+                    value={editBranchName}
+                    placeholder="Nome da filial"
+                    onChange={(e) => setEditBranchName(e.target.value)}
+                  />
+                ) : (
+                  branch.name
+                )}
+              </td>
+              <td className="d-none d-md-table-cell">
+                {editBranchId === branch.id ? (
+                  <Input
+                    type="text"
+                    value={editBranchLocation}
+                    placeholder="Localização da filial"
+                    onChange={(e) => setEditBranchLocation(e.target.value)}
+                  />
+                ) : (
+                  branch.location
+                )}
+              </td>
+              <td className="text-end" style={{ width: '120px'}}>
+                {editBranchId === branch.id ? (
+                  <>
+                    <button
+                      className="btn btn-success btn-sm me-2"
+                      onClick={confirmEditing}
+                      data-bs-toggle="tooltip"
+                      title="Confirmar Edição"
+                    >
+                      <FaCheck />
+                    </button>
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={cancelEditing}
+                      data-bs-toggle="tooltip"
+                      title="Cancelar Edição"
+                    >
+                      <FaTimes />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-primary btn-sm me-2"
+                      onClick={() => startEditing(branch)}
+                      data-bs-toggle="tooltip"
+                      title="Editar Filial"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(branch.id)}
+                      data-bs-toggle="tooltip"
+                      title="Deletar Filial"
+                    >
+                      <FaTrash />
+                    </button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
