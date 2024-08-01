@@ -51,7 +51,6 @@ const Branches: React.FC = () => {
       const getBranchesResult = await getBranches();
       if (deleteResult && getBranchesResult) {
         setBranches(getBranchesResult);
-        alert(`Filial com id: ${id} deletada com sucesso!`);
       }
     }
   };

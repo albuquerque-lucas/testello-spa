@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaCheck, FaTimes } from "react-icons/fa";
+import { toast } from 'react-toastify';
 import useCustomerData from '../../lib/hooks/Customer/useCustomerData';
 import CustomForm from '../../components/Forms/CustomForm';
 import Input from '../../components/Inputs/Input';
@@ -41,7 +42,7 @@ const Customers: React.FC = () => {
       const getCustomersResult = await getCustomers();
       if (deleteResult && getCustomersResult) {
         setCustomers(getCustomersResult);
-        alert(`Cliente com id: ${id} deletado com sucesso!`);
+        // toast('Cliente deletado com sucesso!', { type: 'success' });
       }
     }
   };
