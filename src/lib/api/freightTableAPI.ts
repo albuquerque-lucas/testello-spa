@@ -45,7 +45,7 @@ export const deleteFreightTable = async (id: number): Promise<boolean> => {
     return true;
   } catch (error: any) {
     toast.error('Ocorreu um erro tentando deletar a tabela de frete');
-    console.log('Ocorreu um erro tentando deletar a tabela de frete', error);
+    console.log('Ocorreu um erro tentando deletar a tabela de fretes', error);
     return false;
   }
 }
