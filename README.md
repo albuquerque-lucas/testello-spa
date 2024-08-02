@@ -1,4 +1,3 @@
-+++markdown
 # Testello-WebApp
 
 ## Descrição
@@ -41,4 +40,3 @@ npm run dev
 ```
 
 O comando acima irá iniciar a aplicação em modo de desenvolvimento. Abra [http://localhost:5174](http://localhost:5174) para visualizar no navegador.
-+++
