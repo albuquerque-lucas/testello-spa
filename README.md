@@ -1,30 +1,44 @@
-# React + TypeScript + Vite
++++markdown
+# Testello-WebApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descrição
 
-Currently, two official plugins are available:
+Testello-WebApp é uma aplicação frontend desenvolvida em ReactJs para consumir a API da Testello, fornecendo uma interface para interação com os dados de frete, clientes e filiais. A aplicação está hospedada para fins de demonstração no seguinte link: [https://testello-spa.vercel.app/](https://testello-spa.vercel.app/).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **Front-end**: React.js
+- **Linguagem**: TypeScript
+- **Gerenciamento de Estado**: Context API, Hooks
+- **Estilização**: CSS, Bootstrap
+- **Comunicação com API**: Axios
+- **Notificações**: React Toastify
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Requisitos do Sistema
 
-- Configure the top-level `parserOptions` property like this:
+- Node.js 14+
+- npm 6+
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Configuração do Ambiente
+
+#### Clonar o Repositório
+
+```bash
+git clone https://github.com/albuquerque-lucas/testello-spa.git
+cd testello-spa
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+#### Instalar dependências
+
+```bash
+npm install
+```
+
+#### Iniciar a Aplicação
+
+```bash
+npm run dev
+```
+
+O comando acima irá iniciar a aplicação em modo de desenvolvimento. Abra [http://localhost:5174](http://localhost:5174) para visualizar no navegador.
++++
