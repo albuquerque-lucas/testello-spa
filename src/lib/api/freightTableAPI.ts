@@ -38,14 +38,14 @@ export const updateFreightTable = async (id: number, freightTable: Partial<Freig
   }
 }
 
-export const deleteFreightTable = async (ids: number[]): Promise<boolean> => {
+export const deleteFreightTable = async (id: number): Promise<boolean> => {
   try {
-    await axios.post('/api/freight-tables/delete', { ids });
-    toast.success('Tabelas de frete deletadas com sucesso');
+    await axios.delete(`/api/freight-tables/${id}`);
+    toast.success('Tabela de frete deletada com sucesso');
     return true;
   } catch (error: any) {
-    toast.error('Ocorreu um erro tentando deletar as tabelas de frete');
-    console.log('Ocorreu um erro tentando deletar as tabelas de frete', error);
+    toast.error('Ocorreu um erro tentando deletar a tabela de frete');
+    console.log('Ocorreu um erro tentando deletar a tabela de frete', error);
     return false;
   }
 }

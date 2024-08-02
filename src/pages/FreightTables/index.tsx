@@ -76,7 +76,7 @@ const FreightTables: React.FC = () => {
   
   const handleDelete = async (id: number) => {
     if (window.confirm('Tem certeza de que deseja excluir esta tabela de frete?')) {
-      const deleteResult = await deleteFreightTable([id]);
+      const deleteResult = await deleteFreightTable(id);
       const getFreightTablesResult = await getFreightTables();
       if (deleteResult && getFreightTablesResult) {
         setFreightTables(getFreightTablesResult);
